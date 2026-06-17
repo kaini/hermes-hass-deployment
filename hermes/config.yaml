@@ -15,6 +15,7 @@ environment:
   API_SERVER_ENABLED: "true"
   API_SERVER_HOST: "0.0.0.0"
   API_SERVER_CORS_ORIGINS: "*"
+  HERMES_DASHBOARD: "true"
 options:
   api_server_key: null
   dashboard_username: null
