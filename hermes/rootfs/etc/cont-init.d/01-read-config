@@ -1,0 +1,3 @@
+#!/command/with-contenv sh
+API_SERVER_KEY="$(jq -r .api_server_key /opt/data/options.json)"
+printf '%s' "$API_SERVER_KEY" > /var/run/s6/container_environment/API_SERVER_KEY

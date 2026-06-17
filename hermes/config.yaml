@@ -1,5 +1,5 @@
-name: "Hermes"
-description: "A deployment configuration for Hermes as a Home Assistant app."
+name: "Hermes Agent"
+description: "A deployment configuration for Hermes Agent as a Home Assistant app."
 version: "1.0.0"
 slug: "hermes-hass-deployment"
 init: false
@@ -9,3 +9,13 @@ map:
   - type: data
     read_only: false
     path: /opt/data
+ports:
+  - "8642/tcp": 8642
+environment:
+  - API_SERVER_ENABLED: "true"
+  - API_SERVER_HOST: "0.0.0.0"
+  - API_SERVER_CORS_ORIGINS: "*"
+options:
+  - api_server_key: null
+schema:
+  - api_server_key: password
