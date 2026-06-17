@@ -1,3 +1,11 @@
 #!/command/with-contenv sh
+
 API_SERVER_KEY="$(jq -r .api_server_key /opt/data/options.json)"
+HERMES_DASHBOARD_BASIC_AUTH_USERNAME="$(jq -r .dashboard_username /opt/data/options.json)"
+HERMES_DASHBOARD_BASIC_AUTH_PASSWORD="$(jq -r .dashboard_password /opt/data/options.json)"
+HERMES_DASHBOARD_BASIC_AUTH_SECRET="$(jq -r .dashboard_secret /opt/data/options.json)"
+
 printf '%s' "$API_SERVER_KEY" > /var/run/s6/container_environment/API_SERVER_KEY
+printf '%s' "$HERMES_DASHBOARD_BASIC_AUTH_USERNAME" > /var/run/s6/container_environment/HERMES_DASHBOARD_BASIC_AUTH_USERNAME
+printf '%s' "$HERMES_DASHBOARD_BASIC_AUTH_PASSWORD" > /var/run/s6/container_environment/HERMES_DASHBOARD_BASIC_AUTH_PASSWORD
+printf '%s' "$HERMES_DASHBOARD_BASIC_AUTH_SECRET" > /var/run/s6/container_environment/HERMES_DASHBOARD_BASIC_AUTH_SECRET

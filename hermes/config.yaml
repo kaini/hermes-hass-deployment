@@ -1,6 +1,6 @@
 name: "Hermes Agent"
 description: "A deployment configuration for Hermes Agent as a Home Assistant app."
-version: "1.0.4"
+version: "1.0.5"
 slug: "hermes-hass-deployment"
 init: false
 arch:
@@ -17,5 +17,11 @@ environment:
   API_SERVER_CORS_ORIGINS: "*"
 options:
   api_server_key: null
+  dashboard_username: null
+  dashboard_password: null
+  dashboard_secret: null
 schema:
   api_server_key: password
+  dashboard_username: str
+  dashboard_password: password
+  dashboard_secret: password
