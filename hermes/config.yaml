@@ -16,6 +16,6 @@ environment:
   - API_SERVER_HOST: "0.0.0.0"
   - API_SERVER_CORS_ORIGINS: "*"
 options:
-  - api_server_key: null
+  api_server_key: null
 schema:
-  - api_server_key: password
+  api_server_key: password
