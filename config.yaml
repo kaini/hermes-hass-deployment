@@ -1,0 +1,11 @@
+name: "Hermes"
+description: "A deployment configuration for Hermes as a Home Assistant app."
+version: "1.0.0"
+slug: "hermes-hass-deployment"
+init: false
+arch:
+  - amd64
+map:
+  - type: data
+    read_only: false
+    path: /opt/data
