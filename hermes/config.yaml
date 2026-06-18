@@ -1,6 +1,6 @@
 name: "Hermes Agent"
 description: "A deployment configuration for Hermes Agent as a Home Assistant app."
-version: "1.0.22"
+version: "1.0.23"
 slug: "hermes-hass-deployment"
 init: false
 arch:
@@ -16,7 +16,6 @@ ports:
   9119/tcp: 9119
 webui: "[PROTO:ssl_enabled]://[HOST]:[PORT:9119]/"
 ingress: true
-ingress_port: 9119
 ingress_stream: true
 environment:
   API_SERVER_HOST: "127.0.0.1"

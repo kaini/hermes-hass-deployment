@@ -79,4 +79,11 @@ backend bk_19119
     option forwardfor
     timeout tunnel 1h
     server local_19119 127.0.0.1:19119
+
+frontend ingress_8099
+    mode http
+    bind *:8099
+    http-request deny if !{ src 172.30.32.2 }
+    default_backend bk_19119
+
 EOF
