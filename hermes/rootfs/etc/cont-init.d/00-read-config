@@ -17,7 +17,6 @@ fi
 jq -j .dashboard.username /opt/data/options.json > /var/run/s6/container_environment/HERMES_DASHBOARD_BASIC_AUTH_USERNAME
 jq -j .dashboard.password /opt/data/options.json > /var/run/s6/container_environment/HERMES_DASHBOARD_BASIC_AUTH_PASSWORD
 cat /opt/data/dashboard_secret > /var/run/s6/container_environment/HERMES_DASHBOARD_BASIC_AUTH_SECRET
-printf '%s:%s' "$(jq -j .dashboard.username /opt/data/options.json)" "$(jq -j .dashboard.password /opt/data/options.json)" | base64 -w0 > /var/run/s6/container_environment/HAPROXY_BASIC
 
 ############ API Server
 if [[ "$(jq -j .api_server.enabled /opt/data/options.json)" == "true" ]]; then
@@ -80,13 +79,5 @@ backend bk_19119
     option forwardfor
     timeout tunnel 1h
     server local_19119 127.0.0.1:19119
-
-frontend ingress_8099
-    mode http
-    bind *:8099
-    http-request deny if !{ src 172.30.32.2 }
-    http-request set-header X-Forwarded-Prefix %[req.hdr(X-Ingress-Path)]
-    http-request set-header Authorization %[env(HAPROXY_BASIC)]
-    default_backend bk_19119
 
 EOF
