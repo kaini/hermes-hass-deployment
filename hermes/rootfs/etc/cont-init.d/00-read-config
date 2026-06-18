@@ -48,13 +48,10 @@ else
 fi
 cat >/etc/haproxy/haproxy.cfg <<EOF 
 global
-    log /dev/log local0
     maxconn 2048
 
 defaults
     log     global
-    mode    tcp
-    option  tcplog
     timeout connect 5s
     timeout client  1m
     timeout server  1m
@@ -77,8 +74,9 @@ frontend fe_9119
 
 backend bk_19119
     mode http
+    option http-server-close
     option forwarded
     option forwardfor
-    http-request set-header Host 127.0.0.1:19119
+    timeout tunnel 1h
     server local_19119 127.0.0.1:19119
 EOF

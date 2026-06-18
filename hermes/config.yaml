@@ -19,7 +19,9 @@ environment:
   API_SERVER_PORT: "18642"
   API_SERVER_CORS_ORIGINS: "*"
   HERMES_DASHBOARD: "true"
-  HERMES_DASHBOARD_HOST: "127.0.0.1"
+  # Unfortunately, 0.0.0.0 is needed otherwise Hermes will not enable the Basic-auth flow.
+  # But the port is not exposed by Docker anyways.
+  HERMES_DASHBOARD_HOST: "0.0.0.0"
   HERMES_DASHBOARD_PORT: "19119"
 options:
   dashboard:
