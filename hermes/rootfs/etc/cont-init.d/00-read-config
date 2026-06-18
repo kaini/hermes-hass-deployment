@@ -68,6 +68,7 @@ ${HAPROXY_API_SERVER}backend bk_18642
 ${HAPROXY_API_SERVER}    mode http
 ${HAPROXY_API_SERVER}    option forwarded
 ${HAPROXY_API_SERVER}    option forwardfor
+${HAPROXY_API_SERVER}    http-request set-header Host 127.0.0.1:18642
 ${HAPROXY_API_SERVER}    server local_18642 127.0.0.1:18642
 
 frontend fe_9119
@@ -79,5 +80,6 @@ backend bk_19119
     mode http
     option forwarded
     option forwardfor
+    http-request set-header Host 127.0.0.1:19119
     server local_19119 127.0.0.1:19119
 EOF
