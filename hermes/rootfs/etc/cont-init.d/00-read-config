@@ -48,9 +48,7 @@ else
 fi
 cat >/etc/haproxy/haproxy.cfg <<EOF 
 global
-    log /dev/log local0
-    log /dev/log local1 notice
-    daemon
+    log stdout
     maxconn 2048
 
 defaults
