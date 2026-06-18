@@ -6,18 +6,18 @@ if [[ ! -f /opt/data/dashboard_secret ]]; then
     echo "Dashboard secret not found, generating a new one..."
     openssl rand -base64 32 > /opt/data/dashboard_secret
 fi
-if [[ -z "$(jq -r .dashboard.username /opt/data/options.json)" ]]; then
+if [[ -z "$(jq -j .dashboard.username /opt/data/options.json)" ]]; then
     echo "ERROR: Dashboard username not set!"
     exit 1
 fi
-if [[ -z "$(jq -r .dashboard.password /opt/data/options.json)" ]]; then
+if [[ -z "$(jq -j .dashboard.password /opt/data/options.json)" ]]; then
     echo "ERROR: Dashboard password not set!"
     exit 1
 fi
-printf '%s' "$(jq -r .dashboard.username /opt/data/options.json)" > /var/run/s6/container_environment/HERMES_DASHBOARD_BASIC_AUTH_USERNAME
-printf '%s' "$(jq -r .dashboard.password /opt/data/options.json)" > /var/run/s6/container_environment/HERMES_DASHBOARD_BASIC_AUTH_PASSWORD
-printf '%s' "$(cat /opt/data/dashboard_secret)" > /var/run/s6/container_environment/HERMES_DASHBOARD_BASIC_AUTH_SECRET
-printf '%s' "$(printf '%s:%s "$(jq -r .dashboard.username /opt/data/options.json)" "$(jq -r .dashboard.password /opt/data/options.json)" | base64 -w0)" > /var/run/s6/container_environment/HAPROXY_BASIC
+jq -j .dashboard.username /opt/data/options.json > /var/run/s6/container_environment/HERMES_DASHBOARD_BASIC_AUTH_USERNAME
+jq -j .dashboard.password /opt/data/options.json > /var/run/s6/container_environment/HERMES_DASHBOARD_BASIC_AUTH_PASSWORD
+cat /opt/data/dashboard_secret > /var/run/s6/container_environment/HERMES_DASHBOARD_BASIC_AUTH_SECRET
+printf '%s:%s' "$(jq -j .dashboard.username /opt/data/options.json)" "$(jq -j .dashboard.password /opt/data/options.json)" | base64 -w0 > /var/run/s6/container_environment/HAPROXY_BASIC
 
 ############ API Server
 if [[ "$(jq -r .api_server.enabled /opt/data/options.json)" == "true" ]]; then
@@ -25,24 +25,24 @@ if [[ "$(jq -r .api_server.enabled /opt/data/options.json)" == "true" ]]; then
         echo "ERROR: API server key not set!"
         exit 1
     fi
-    printf '%s' "true" > /var/run/s6/container_environment/API_SERVER_ENABLED
-    printf '%s' "$(jq -r .api_server.key /opt/data/options.json)" > /var/run/s6/container_environment/API_SERVER_KEY
+    echo -n "true" > /var/run/s6/container_environment/API_SERVER_ENABLED
+    jq -j .api_server.key /opt/data/options.json > /var/run/s6/container_environment/API_SERVER_KEY
 else
-    printf '%s' "false" > /var/run/s6/container_environment/API_SERVER_ENABLED
+    echo -n "false" > /var/run/s6/container_environment/API_SERVER_ENABLED
 fi
 
 ############ HAProxy
 mkdir -p /etc/haproxy
-if [[ "$(jq -r .ssl_enabled /opt/data/options.json)" == "true" ]]; then
+if [[ "$(jq -j .ssl_enabled /opt/data/options.json)" == "true" ]]; then
     (
         umask 077
-        cat "/ssl/$(jq -r .ssl.certfile /opt/data/options.json)" "/ssl/$(jq -r .ssl.keyfile /opt/data/options.json)" >/etc/haproxy/cert-and-key.pem
+        cat "/ssl/$(jq -j .ssl.certfile /opt/data/options.json)" "/ssl/$(jq -j .ssl.keyfile /opt/data/options.json)" > /etc/haproxy/cert-and-key.pem
     )
     HAPROXY_SSL="ssl crt /etc/haproxy/cert-and-key.pem"
 else
     HAPROXY_SSL=
 fi
-if [[ "$(jq -r .api_server.enabled /opt/data/options.json)" == "true" ]]; then
+if [[ "$(jq -j .api_server.enabled /opt/data/options.json)" == "true" ]]; then
     HAPROXY_API_SERVER=
 else
     HAPROXY_API_SERVER="#"
