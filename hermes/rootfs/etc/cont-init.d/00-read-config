@@ -32,7 +32,7 @@ fi
 
 ############ HAProxy
 mkdir -p /etc/haproxy
-if [[ "$(jq -r .ssl.enabled /opt/data/options.json)" == "true" ]]; then
+if [[ "$(jq -r .ssl_enabled /opt/data/options.json)" == "true" ]]; then
     (
         umask 077
         cat "/ssl/$(jq -r .ssl.certfile /opt/data/options.json)" "/ssl/$(jq -r .ssl.keyfile /opt/data/options.json)" >/etc/haproxy/cert-and-key.pem
