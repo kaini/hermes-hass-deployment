@@ -61,17 +61,17 @@ defaults
     timeout client  1m
     timeout server  1m
 
-frontend fe_8642
-    bind *:8642 ${HAPROXY_SSL}
-    default_backend bk_18642
-
-backend bk_18642
-    server local_18642 127.0.0.1:18642
-
-${HAPROXY_API_SERVER}frontend fe_9119
-${HAPROXY_API_SERVER}    bind *:9119 ${HAPROXY_SSL}
-${HAPROXY_API_SERVER}    default_backend bk_19119
+${HAPROXY_API_SERVER}frontend fe_8642
+${HAPROXY_API_SERVER}    bind *:8642 ${HAPROXY_SSL}
+${HAPROXY_API_SERVER}    default_backend bk_18642
 ${HAPROXY_API_SERVER}
-${HAPROXY_API_SERVER}backend bk_19119
-${HAPROXY_API_SERVER}    server local_19119 127.0.0.1:19119
+${HAPROXY_API_SERVER}backend bk_18642
+${HAPROXY_API_SERVER}    server local_18642 127.0.0.1:18642
+
+frontend fe_9119
+    bind *:9119 ${HAPROXY_SSL}
+    default_backend bk_19119
+
+backend bk_19119
+    server local_19119 127.0.0.1:19119
 EOF
