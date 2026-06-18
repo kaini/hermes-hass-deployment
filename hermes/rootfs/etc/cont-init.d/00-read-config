@@ -72,4 +72,5 @@ frontend fe_9119
 
 backend bk_19119
     server local_19119 127.0.0.1:19119
+    http-request replace-header Host .* localhost:19119
 EOF
