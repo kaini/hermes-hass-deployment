@@ -1,6 +1,6 @@
 name: "Hermes Agent"
 description: "A deployment configuration for Hermes Agent as a Home Assistant app."
-version: "1.0.24"
+version: "1.0.25"
 slug: "hermes-hass-deployment"
 init: false
 arch:
