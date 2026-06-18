@@ -84,6 +84,7 @@ frontend ingress_8099
     mode http
     bind *:8099
     http-request deny if !{ src 172.30.32.2 }
-    default_backend bk_19119
+    http-request set-header X-Forwarded-Prefix %[req.hdr(X-Ingress-Path)]
+    default_backend bk_ingress_8099
 
 EOF
