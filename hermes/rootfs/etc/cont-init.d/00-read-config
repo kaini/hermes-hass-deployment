@@ -20,8 +20,8 @@ cat /opt/data/dashboard_secret > /var/run/s6/container_environment/HERMES_DASHBO
 printf '%s:%s' "$(jq -j .dashboard.username /opt/data/options.json)" "$(jq -j .dashboard.password /opt/data/options.json)" | base64 -w0 > /var/run/s6/container_environment/HAPROXY_BASIC
 
 ############ API Server
-if [[ "$(jq -r .api_server.enabled /opt/data/options.json)" == "true" ]]; then
-    if [[ -z "$(jq -r .api_server.key /opt/data/options.json)" ]]; then
+if [[ "$(jq -j .api_server.enabled /opt/data/options.json)" == "true" ]]; then
+    if [[ -z "$(jq -j .api_server.key /opt/data/options.json)" ]]; then
         echo "ERROR: API server key not set!"
         exit 1
     fi
