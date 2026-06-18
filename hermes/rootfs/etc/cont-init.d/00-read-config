@@ -85,7 +85,7 @@ frontend ingress_8099
     bind *:8099
     http-request deny if !{ src 172.30.32.2 }
     http-request set-header X-Forwarded-Prefix %[req.hdr(X-Ingress-Path)]
-    http-request set-header Authorization "Basic %[env(HERMES_DASHBOARD_BASIC_AUTH_USERNAME),concat(:,env(HERMES_DASHBOARD_BASIC_AUTH_PASSWORD)),b64enc]"
+    http-request set-header Authorization "Basic %[env(HERMES_DASHBOARD_BASIC_AUTH_USERNAME),env(HERMES_DASHBOARD_BASIC_AUTH_PASSWORD),concat('%s:%s'),b64enc]"
     default_backend bk_19119
 
 EOF
